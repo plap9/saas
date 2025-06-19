@@ -127,7 +127,9 @@ secrets/
 # E2E directories (auto-generated)
 *-e2e/
 
-# Configuration files  
+# Configuration files
 .vscode/
 .editorconfig
- 
+
+vite.config.*.timestamp*
+vitest.config.*.timestamp*
