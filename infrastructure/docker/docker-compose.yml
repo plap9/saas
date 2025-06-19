@@ -1,0 +1,161 @@
+services:
+  # PostgreSQL Database với pgvector extension
+  postgresql:
+    build:
+      context: ./databases/postgresql
+      dockerfile: Dockerfile
+    container_name: postgres-ai
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-ai_assistant_main}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_MULTIPLE_DATABASES: ${POSTGRES_MULTIPLE_DATABASES:-ai_assistant_audit,ai_assistant_cache}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - ./data/postgresql:/var/lib/postgresql/data
+      - ./databases/postgresql/init:/docker-entrypoint-initdb.d
+      - ./databases/postgresql/config/postgresql.conf:/etc/postgresql/postgresql.conf
+    networks:
+      - ai_assistant_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d ai_assistant_main"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    command: postgres -c config_file=/etc/postgresql/postgresql.conf
+    deploy:
+      resources:
+        limits:
+          memory: 1GB
+          cpus: '0.5'
+        reservations:
+          memory: 512MB
+          cpus: '0.25'
+
+  # Redis Cache & Session Store
+  redis:
+    image: redis:7.2-alpine
+    container_name: redis-ai
+    restart: unless-stopped
+    command: redis-server /usr/local/etc/redis/redis.conf
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - ./data/redis:/data
+      - ./databases/redis/redis.conf:/usr/local/etc/redis/redis.conf
+    networks:
+      - ai_assistant_network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          memory: 512MB
+          cpus: '0.25'
+        reservations:
+          memory: 256MB
+          cpus: '0.1'
+
+  # Weaviate Vector Database
+  weaviate:
+    image: semitechnologies/weaviate:1.22.4
+    container_name: weaviate-ai
+    restart: unless-stopped
+    ports:
+      - "${WEAVIATE_PORT:-8080}:8080"
+    environment:
+      QUERY_DEFAULTS_LIMIT: 25
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'false'
+      AUTHENTICATION_APIKEY_ENABLED: 'true'
+      AUTHENTICATION_APIKEY_ALLOWED_KEYS: ${WEAVIATE_API_KEY}
+      AUTHENTICATION_APIKEY_USERS: ${WEAVIATE_ADMIN_USER:-admin@ai-assistant.com}
+      PERSISTENCE_DATA_PATH: '/var/lib/weaviate'
+      DEFAULT_VECTORIZER_MODULE: 'text2vec-openai'
+      ENABLE_MODULES: 'text2vec-openai,generative-openai'
+      OPENAI_APIKEY: ${OPENAI_API_KEY}
+      CLUSTER_HOSTNAME: 'node1'
+    volumes:
+      - ./data/weaviate:/var/lib/weaviate
+      - ./databases/weaviate/weaviate.yaml:/etc/weaviate/weaviate.yaml
+    networks:
+      - ai_assistant_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/v1/meta"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    deploy:
+      resources:
+        limits:
+          memory: 1GB
+          cpus: '0.5'
+        reservations:
+          memory: 512MB
+          cpus: '0.25'
+
+  # PgAdmin for PostgreSQL Management (Development only)
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin-ai
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL:-admin@ai-assistant.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD:-admin123}
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    volumes:
+      - ./data/pgadmin:/var/lib/pgadmin
+    networks:
+      - ai_assistant_network
+    depends_on:
+      postgresql:
+        condition: service_healthy
+    profiles:
+      - development
+    deploy:
+      resources:
+        limits:
+          memory: 256MB
+          cpus: '0.1'
+
+  # Redis Commander for Redis Management (Development only)
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    container_name: redis-commander-ai
+    restart: unless-stopped
+    environment:
+      REDIS_HOSTS: local:redis-ai:6379
+      HTTP_USER: ${REDIS_COMMANDER_USER:-admin}
+      HTTP_PASSWORD: ${REDIS_COMMANDER_PASSWORD:-admin123}
+    ports:
+      - "${REDIS_COMMANDER_PORT:-8081}:8081"
+    networks:
+      - ai_assistant_network
+    depends_on:
+      redis:
+        condition: service_healthy
+    profiles:
+      - development
+    deploy:
+      resources:
+        limits:
+          memory: 128MB
+          cpus: '0.1'
+
+networks:
+  ai_assistant_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
+ 

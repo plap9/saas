@@ -1,0 +1,216 @@
+# AI Assistant Platform - Weaviate Vector Database Configuration
+# Optimized for AI embeddings and semantic search
+
+# =============================================================================
+# CORE CONFIGURATION
+# =============================================================================
+query_defaults:
+  limit: 25
+
+authentication:
+  anonymous_access:
+    enabled: false
+  apikey:
+    enabled: true
+    allowed_keys:
+      - weaviate-dev-key-2024-secure
+    users:
+      - admin@ai-assistant.com
+
+# =============================================================================
+# PERSISTENCE SETTINGS
+# =============================================================================
+persistence:
+  dataPath: "/var/lib/weaviate"
+
+# =============================================================================
+# MODULES CONFIGURATION
+# =============================================================================
+modules:
+  text2vec-openai:
+    enabled: true
+    settings:
+      model: "text-embedding-ada-002"
+      dimensions: 1536
+      max_tokens: 8191
+      type: "text"
+  generative-openai:
+    enabled: true
+    settings:
+      model: "gpt-3.5-turbo"
+      max_tokens: 4096
+      temperature: 0.7
+      top_p: 1.0
+      frequency_penalty: 0.0
+      presence_penalty: 0.0
+
+# =============================================================================
+# CLUSTER CONFIGURATION
+# =============================================================================
+cluster:
+  hostname: "node1"
+  gossip_bind_port: 7000
+  data_bind_port: 7001
+
+# =============================================================================
+# STORAGE CONFIGURATION
+# =============================================================================
+storage:
+  backend: "filesystem"
+  filesystem:
+    root_path: "/var/lib/weaviate"
+
+# =============================================================================
+# MONITORING AND LOGGING
+# =============================================================================
+monitoring:
+  enabled: true
+  tool: "prometheus"
+
+logging:
+  level: "info"
+  format: "text"
+
+# =============================================================================
+# PERFORMANCE SETTINGS
+# =============================================================================
+# Query settings
+query:
+  maximum_results: 10000
+  
+# Vector cache settings
+vector_cache:
+  max_objects: 1e12
+
+# Background tasks
+background_tasks:
+  cleanup_interval: 60s
+
+# =============================================================================
+# SCHEMA DEFINITIONS
+# =============================================================================
+# These will be created programmatically by the application
+# Example classes for AI Assistant Platform:
+
+default_classes:
+  - class: "Document"
+    description: "Knowledge base documents with vector embeddings"
+    vectorizer: "text2vec-openai"
+    properties:
+      - name: "title"
+        dataType: ["string"]
+        description: "Document title"
+      - name: "content"
+        dataType: ["text"]
+        description: "Document content for vectorization"
+      - name: "source"
+        dataType: ["string"]
+        description: "Document source (file, url, etc.)"
+      - name: "metadata"
+        dataType: ["object"]
+        description: "Additional metadata"
+      - name: "created_at"
+        dataType: ["date"]
+        description: "Creation timestamp"
+      - name: "updated_at"
+        dataType: ["date"]
+        description: "Last update timestamp"
+
+  - class: "Conversation"
+    description: "AI conversation context and memory"
+    vectorizer: "text2vec-openai"
+    properties:
+      - name: "user_id"
+        dataType: ["string"]
+        description: "User identifier"
+      - name: "session_id"
+        dataType: ["string"]
+        description: "Conversation session ID"
+      - name: "messages"
+        dataType: ["text"]
+        description: "Conversation messages for context"
+      - name: "context"
+        dataType: ["object"]
+        description: "Conversation context data"
+      - name: "timestamp"
+        dataType: ["date"]
+        description: "Message timestamp"
+
+  - class: "UserProfile"
+    description: "User preferences and interaction patterns"
+    vectorizer: "text2vec-openai"
+    properties:
+      - name: "user_id"
+        dataType: ["string"]
+        description: "User identifier"
+      - name: "preferences"
+        dataType: ["text"]
+        description: "User preferences and interests"
+      - name: "interaction_history"
+        dataType: ["object"]
+        description: "Historical interaction patterns"
+      - name: "topics_of_interest"
+        dataType: ["string[]"]
+        description: "Topics user is interested in"
+
+# =============================================================================
+# SECURITY SETTINGS
+# =============================================================================
+security:
+  tls:
+    enabled: false  # Disabled for development
+    # cert_file: "/certs/server.crt"
+    # key_file: "/certs/server.key"
+
+# =============================================================================
+# BACKUP CONFIGURATION
+# =============================================================================
+backup:
+  filesystem:
+    path: "/var/lib/weaviate/backups"
+
+# =============================================================================
+# AI ASSISTANT SPECIFIC SETTINGS
+# =============================================================================
+# Custom settings for AI Assistant Platform
+ai_assistant:
+  # Vector similarity thresholds
+  similarity_thresholds:
+    document_search: 0.7
+    conversation_context: 0.8
+    user_preferences: 0.75
+  
+  # Search settings
+  search:
+    max_results: 50
+    min_similarity: 0.6
+    boost_factors:
+      recency: 1.2
+      relevance: 1.0
+      user_preference: 1.1
+
+# =============================================================================
+# DEVELOPMENT SETTINGS
+# =============================================================================
+development:
+  enable_debug_logs: true
+  cors:
+    enabled: true
+    origins: ["http://localhost:3000", "http://localhost:3001"]
+
+# =============================================================================
+# NOTES
+# =============================================================================
+# This configuration is optimized for:
+# 1. Document vectorization and semantic search
+# 2. Conversation context and memory management
+# 3. User preference learning and personalization
+# 4. Integration with OpenAI embeddings and generation
+# 5. Development environment with debugging enabled
+#
+# For production, consider:
+# - Enabling TLS/SSL
+# - Setting up authentication with proper API keys
+# - Configuring backup strategies
+# - Setting up monitoring and alerting
+# - Optimizing vector cache settings based on usage patterns 

@@ -1,0 +1,130 @@
+# AI Assistant Platform - Docker Infrastructure .gitignore
+
+# =============================================================================
+# ENVIRONMENT FILES
+# =============================================================================
+# Environment files containing sensitive data
+.env
+.env.local
+.env.development
+.env.staging
+.env.production
+
+# Backup environment files
+.env.backup
+.env.*.backup
+
+# =============================================================================
+# DATABASE DATA DIRECTORIES
+# =============================================================================
+# Persistent database data (should not be committed)
+data/postgresql/
+data/redis/
+data/weaviate/
+data/pgadmin/
+
+# Database backups
+backups/
+*.sql.gz
+*.dump
+*.backup
+
+# =============================================================================
+# DOCKER RELATED FILES
+# =============================================================================
+# Docker override files for local development
+docker-compose.override.yml
+docker-compose.local.yml
+
+# Docker build cache
+.dockerignore.local
+
+# =============================================================================
+# LOGS AND TEMPORARY FILES
+# =============================================================================
+# Log files
+logs/
+*.log
+*.log.*
+
+# Temporary files
+tmp/
+temp/
+.tmp/
+
+# =============================================================================
+# SECRETS AND CERTIFICATES
+# =============================================================================
+# SSL certificates and private keys
+certs/
+*.crt
+*.key
+*.pem
+*.p12
+*.pfx
+
+# API keys and secrets
+secrets/
+*.secret
+api-keys.txt
+
+# =============================================================================
+# MONITORING AND METRICS
+# =============================================================================
+# Monitoring data
+prometheus/
+grafana/data/
+
+# Metrics and monitoring configs (if sensitive)
+*.metrics
+
+# =============================================================================
+# DEVELOPMENT FILES
+# =============================================================================
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# =============================================================================
+# NODE.js RELATED (if any)
+# =============================================================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# =============================================================================
+# TESTING AND COVERAGE
+# =============================================================================
+# Test results
+test-results/
+coverage/
+*.coverage
+
+# =============================================================================
+# NOTES
+# =============================================================================
+# This .gitignore ensures:
+# 1. Sensitive environment variables are not committed
+# 2. Database data remains local to each environment
+# 3. Certificates and secrets are protected
+# 4. Temporary files and logs don't clutter the repo
+# 5. Development-specific overrides don't affect others
+#
+# Remember:
+# - Always use .env.example as template
+# - Keep sensitive data in .env (ignored)
+# - Use secrets management in production
+# - Backup data directories separately 
