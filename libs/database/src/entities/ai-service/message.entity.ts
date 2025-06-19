@@ -12,7 +12,6 @@ import {
   IsOptional,
   IsObject,
   IsNumber,
-  Length,
 } from 'class-validator';
 import { BaseEntity } from '../base/base.entity';
 import { AiConversation } from './conversation.entity';
@@ -108,8 +107,8 @@ export class AiMessage extends BaseEntity {
     processingTime?: number;
     inputTokens?: number;
     outputTokens?: number;
-    functionCalls?: any[];
-    toolCalls?: any[];
+    functionCalls?: unknown[];
+    toolCalls?: unknown[];
     error?: string;
   };
 
@@ -123,7 +122,7 @@ export class AiMessage extends BaseEntity {
   functionCall?: {
     name: string;
     arguments: string;
-    result?: any;
+    result?: unknown;
   };
 
   @Column({
@@ -140,7 +139,7 @@ export class AiMessage extends BaseEntity {
       name: string;
       arguments: string;
     };
-    result?: any;
+    result?: unknown;
   }>;
 
   @Column({

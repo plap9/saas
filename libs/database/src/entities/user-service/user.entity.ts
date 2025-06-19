@@ -1,8 +1,6 @@
 import {
   Entity,
   Column,
-  OneToMany,
-  OneToOne,
   Index,
 } from 'typeorm';
 import {
@@ -163,14 +161,14 @@ export class User extends BaseEntity {
     nullable: true,
   })
   @IsOptional()
-  preferences?: Record<string, any>;
+  preferences?: Record<string, unknown>;
 
   @Column({
     type: 'jsonb',
     nullable: true,
   })
   @IsOptional()
-  metadata?: Record<string, any>;
+  metadata?: Record<string, unknown>;
 
   // Computed properties
   get fullName(): string {
