@@ -2,8 +2,9 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { databaseConfig } from '@ai-assistant/database';
-import { User } from '@ai-assistant/database';
+import { User, RefreshToken } from '@ai-assistant/database';
 import { UserRepository } from './repositories/user.repository';
+import { RefreshTokenRepository } from './repositories/refresh-token.repository';
 
 @Module({
   imports: [
@@ -23,9 +24,9 @@ import { UserRepository } from './repositories/user.repository';
       },
       inject: [ConfigService],
     }),
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, RefreshToken]),
   ],
-  providers: [UserRepository],
-  exports: [UserRepository, TypeOrmModule],
+  providers: [UserRepository, RefreshTokenRepository],
+  exports: [UserRepository, RefreshTokenRepository, TypeOrmModule],
 })
 export class DatabaseModule {} 

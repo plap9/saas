@@ -1,6 +1,9 @@
 import { StrictMode } from 'react';
-import { BrowserRouter } from 'react-router-dom';
 import * as ReactDOM from 'react-dom/client';
+
+// Import global styles với Tailwind CSS
+import './styles.css';
+
 import App from './app/app';
 
 const root = ReactDOM.createRoot(
@@ -9,8 +12,6 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+    <App />
   </StrictMode>
 );
