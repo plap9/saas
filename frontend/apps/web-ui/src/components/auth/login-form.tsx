@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Link } from 'react-router-dom';
@@ -19,12 +19,6 @@ export interface LoginFormProps {
   className?: string;
 }
 
-type FormData = {
-  email: string;
-  password: string;
-  rememberMe: boolean;
-};
-
 const LoginForm: React.FC<LoginFormProps> = ({
   onSubmit,
   onOAuthClick,
@@ -39,30 +33,30 @@ const LoginForm: React.FC<LoginFormProps> = ({
     formState: { errors, isSubmitting },
     setError,
     clearErrors
-  } = useForm<FormData>({
+  } = useForm({
     resolver: zodResolver(loginSchema),
     defaultValues: {
       email: '',
-      password: '',
-      rememberMe: false
+      password: ''
     }
   });
 
-  const handleFormSubmit: SubmitHandler<FormData> = async (data) => {
+  const handleFormSubmit = async (data: LoginFormData) => {
     try {
       clearErrors();
-      await onSubmit(data as LoginFormData);
-    } catch (err: any) {
+      await onSubmit(data);
+    } catch (err: unknown) {
       // Handle specific API errors
-      if (err.field) {
-        setError(err.field as keyof FormData, {
+      const error = err as { field?: keyof LoginFormData; message?: string };
+      if (error.field) {
+        setError(error.field, {
           type: 'manual',
-          message: err.message
+          message: error.message || 'An error occurred'
         });
       } else {
         setError('root', {
           type: 'manual',
-          message: err.message || 'An unexpected error occurred'
+          message: error.message || 'An unexpected error occurred'
         });
       }
     }
@@ -108,13 +102,13 @@ const LoginForm: React.FC<LoginFormProps> = ({
         <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
           {/* Email Field */}
           <div className="floating-input-group">
-            <Input
+            <input
               {...register('email')}
               type="email"
               placeholder=" "
               disabled={isLoading}
               autoComplete="email"
-              className="floating-input bg-white/10 border-white/20 text-white placeholder-transparent focus:border-blue-400 focus:ring-blue-400/50"
+              className="floating-input bg-white/10 border-white/20 text-white placeholder-transparent focus:border-blue-400 focus:ring-blue-400/50 w-full rounded-xl px-4 py-3 transition-all duration-300 ease-out"
             />
             <label className="floating-label text-white/70">Email address</label>
             {errors.email && (
@@ -124,12 +118,13 @@ const LoginForm: React.FC<LoginFormProps> = ({
 
           {/* Password Field */}
           <div className="floating-input-group">
-            <PasswordInput
+            <input
               {...register('password')}
+              type="password"
               placeholder=" "
               disabled={isLoading}
               autoComplete="current-password"
-              className="floating-input bg-white/10 border-white/20 text-white placeholder-transparent focus:border-blue-400 focus:ring-blue-400/50"
+              className="floating-input bg-white/10 border-white/20 text-white placeholder-transparent focus:border-blue-400 focus:ring-blue-400/50 w-full rounded-xl px-4 py-3 transition-all duration-300 ease-out"
             />
             <label className="floating-label text-white/70">Password</label>
             {errors.password && (
