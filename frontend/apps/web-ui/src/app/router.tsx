@@ -3,6 +3,7 @@ import { createBrowserRouter, RouteObject } from 'react-router-dom';
 
 // Pages
 import HomePage from '../pages/home';
+import DashboardPage from '../pages/dashboard';
 import LoginPage from '../pages/auth/login';
 import RegisterPage from '../pages/auth/register';
 import ForgotPasswordPage from '../pages/auth/forgot-password';
@@ -16,6 +17,10 @@ const routes: RouteObject[] = [
   {
     path: '/',
     element: <HomePage />,
+  },
+  {
+    path: '/dashboard',
+    element: <DashboardPage />,
   },
   {
     path: '/auth',
@@ -44,15 +49,15 @@ const routes: RouteObject[] = [
     element: (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-slate-900 dark:text-slate-100 mb-4">
+          <h1 className="text-4xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">
             404 - Page Not Found
           </h1>
-          <p className="text-slate-600 dark:text-slate-400 mb-8">
+          <p className="text-neutral-600 dark:text-neutral-400 mb-8">
             The page you're looking for doesn't exist.
           </p>
           <a
             href="/"
-            className="bg-blue-400 hover:bg-blue-500 text-white px-6 py-3 rounded-lg font-medium transition-colors"
+            className="bg-primary-500 hover:bg-primary-600 text-white px-6 py-3 rounded-lg font-medium transition-colors"
           >
             Go Home
           </a>
@@ -64,4 +69,4 @@ const routes: RouteObject[] = [
 
 export const router = createBrowserRouter(routes);
 
-export default router; 
+export default router;
