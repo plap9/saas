@@ -4,8 +4,8 @@ import { cn, createVariants } from '../../utils/cn';
 
 // Input Variants Configuration
 const inputVariants = createVariants(
-  // Base styles - using standard Tailwind classes
-  'w-full px-4 py-3 rounded-lg bg-white border transition-colors duration-200 text-slate-900 placeholder:text-slate-500 focus:ring-2 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px] dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-400',
+  // Base styles - using design system classes
+  'input',
   {
     size: {
       xs: 'px-3 py-2 text-xs min-h-[32px]',
@@ -15,9 +15,9 @@ const inputVariants = createVariants(
       xl: 'px-6 py-5 text-xl min-h-[60px]'
     },
     state: {
-      default: 'border-slate-300 focus:ring-blue-500 dark:border-slate-600',
-      error: 'border-red-500 focus:ring-red-500',
-      success: 'border-green-500 focus:ring-green-500'
+      default: 'border-neutral-200 focus:border-primary-400 dark:border-neutral-600',
+      error: 'border-error-500 focus:border-error-500',
+      success: 'border-success-500 focus:border-success-500'
     }
   }
 );
@@ -45,20 +45,20 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label 
             htmlFor={props.id}
-            className="block text-sm font-medium text-slate-700 dark:text-slate-300"
+            className="block text-sm font-medium text-neutral-700 dark:text-neutral-300"
           >
             {label}
             {props.required && (
-              <span className="text-red-500 ml-1">*</span>
+              <span className="text-error-500 ml-1">*</span>
             )}
           </label>
         )}
 
         {/* Input Container */}
-        <div className="relative">
+        <div className="input-group">
           {/* Left Icon */}
           {leftIcon && (
-            <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-500 pointer-events-none">
+            <div className="input-icon">
               {leftIcon}
             </div>
           )}
@@ -68,7 +68,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             className={cn(
               inputVariants({ size, state }),
-              leftIcon ? 'pl-10' : '',
+              leftIcon ? 'input-with-icon' : '',
               rightIcon ? 'pr-10' : '',
               className
             )}
@@ -77,14 +77,14 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 
           {/* Right Icon */}
           {rightIcon && (
-            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-500 pointer-events-none">
+            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-neutral-500 pointer-events-none">
               {rightIcon}
             </div>
           )}
 
           {/* State Indicator Icons */}
           {error && !rightIcon && (
-            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-red-500 pointer-events-none">
+            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-error-500 pointer-events-none">
               <svg 
                 className="w-5 h-5" 
                 fill="none" 
@@ -102,7 +102,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           )}
 
           {success && !rightIcon && !error && (
-            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-green-500 pointer-events-none">
+            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-success-500 pointer-events-none">
               <svg 
                 className="w-5 h-5" 
                 fill="none" 
@@ -124,7 +124,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         {helperText && (
           <p className={cn(
             'text-xs',
-            error ? 'text-red-500' : success ? 'text-green-500' : 'text-slate-500 dark:text-slate-400'
+            error ? 'text-error-500' : success ? 'text-success-500' : 'text-neutral-500 dark:text-neutral-400'
           )}>
             {helperText}
           </p>
@@ -136,4 +136,4 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
 
 Input.displayName = 'Input';
 
-export default Input; 
+export default Input;

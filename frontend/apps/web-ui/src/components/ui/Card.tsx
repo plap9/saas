@@ -4,8 +4,8 @@ import { cn, createVariants } from '../../utils/cn';
 
 // Card Variants Configuration
 const cardVariants = createVariants(
-  // Base styles - using standard Tailwind classes
-  'bg-white border border-slate-200 rounded-xl transition-all duration-200 dark:bg-slate-800 dark:border-slate-700',
+  // Base styles - using design system classes
+  'card',
   {
     padding: {
       xs: 'p-3',
@@ -36,8 +36,8 @@ const Card: React.FC<CardProps> = ({
 }) => {
   const cardClasses = cn(
     cardVariants({ padding, shadow }),
-    hover && 'hover:-translate-y-1 hover:shadow-lg',
-    interactive && 'cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700/50 hover:border-blue-200 dark:hover:border-blue-800',
+    hover && 'hover-lift',
+    interactive && 'cursor-pointer hover:bg-neutral-50 dark:hover:bg-neutral-700/50 hover:border-primary-200 dark:hover:border-primary-800',
     className
   );
 
@@ -50,4 +50,4 @@ const Card: React.FC<CardProps> = ({
 
 Card.displayName = 'Card';
 
-export default Card; 
+export default Card;

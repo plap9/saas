@@ -5,30 +5,30 @@ import { Button, Container, Card } from '../../components/ui';
 
 const HomePage: React.FC = () => {
   return (
-    <div className="min-h-screen bg-white text-slate-900 dark:bg-slate-900 dark:text-slate-100">
+    <div className="min-h-screen bg-gradient-bg-light text-neutral-900 dark:bg-gradient-bg-dark dark:text-neutral-100">
       {/* Header Navigation */}
       <Header transparent>
         {/* Logo */}
-        <div className="flex items-center space-x-2">
-          <div className="w-8 h-8 bg-blue-500 rounded-lg flex items-center justify-center">
-            <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+        <div className="flex items-center space-x-3">
+          <div className="w-10 h-10 bg-gradient-primary rounded-xl flex items-center justify-center shadow-lg hover-scale">
+            <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
             </svg>
           </div>
-          <span className="font-display font-bold text-xl bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
+          <span className="font-display font-bold text-2xl gradient-text">
             AI Assistant
           </span>
         </div>
 
         {/* Navigation Menu */}
         <nav className="hidden md:flex items-center space-x-8">
-          <a href="#features" className="nav-link">
+          <a href="#features" className="text-neutral-600 hover:text-primary-600 transition-colors duration-200 font-medium hover-scale">
             Features
           </a>
-          <a href="#about" className="nav-link">
+          <a href="#about" className="text-neutral-600 hover:text-primary-600 transition-colors duration-200 font-medium hover-scale">
             About
           </a>
-          <a href="#contact" className="nav-link">
+          <a href="#contact" className="text-neutral-600 hover:text-primary-600 transition-colors duration-200 font-medium hover-scale">
             Contact
           </a>
         </nav>
@@ -36,12 +36,12 @@ const HomePage: React.FC = () => {
         {/* CTA Buttons */}
         <div className="flex items-center space-x-4">
           <Link to="/auth/login">
-            <Button variant="ghost" className="hidden sm:inline-flex">
+            <Button variant="ghost" className="hidden sm:inline-flex btn-ghost">
               Sign In
             </Button>
           </Link>
           <Link to="/auth/register">
-            <Button variant="primary">
+            <Button variant="primary" className="btn-primary hover-lift">
               Get Started
             </Button>
           </Link>
@@ -49,7 +49,7 @@ const HomePage: React.FC = () => {
       </Header>
 
       {/* Hero Section */}
-      <section className="py-16 md:py-20 lg:py-24 bg-gradient-to-br from-white via-slate-50 to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+      <section className="hero section-xl">
         <Container>
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Hero Content */}
@@ -57,13 +57,13 @@ const HomePage: React.FC = () => {
               <div className="space-y-6">
                 <h1 className="font-display font-bold text-4xl md:text-6xl lg:text-7xl leading-tight">
                   Your{' '}
-                  <span className="bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">
+                  <span className="gradient-text">
                     Intelligent
                   </span>{' '}
                   Assistant for Everything
                 </h1>
                 
-                <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-xl leading-relaxed">
+                <p className="text-lg md:text-xl text-neutral-600 dark:text-neutral-400 max-w-xl leading-relaxed">
                   Supercharge your productivity with our AI-powered platform. 
                   Automate tasks, get insights, and achieve more with intelligent automation.
                 </p>
@@ -75,29 +75,24 @@ const HomePage: React.FC = () => {
                   <Button 
                     variant="primary" 
                     size="lg"
-                    className="w-full sm:w-auto"
-                    icon={
-                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                      </svg>
-                    }
-                    iconPosition="right"
+                    className="w-full sm:w-auto btn-primary btn-lg hover-lift"
                   >
-                    Get Started Free
+                    <span>Get Started Free</span>
+                    <svg className="w-5 h-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
                   </Button>
                 </Link>
                 
                 <Button 
                   variant="secondary" 
                   size="lg"
-                  className="w-full sm:w-auto"
-                  icon={
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h1m4 0h1m5-9v18a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h16a2 2 0 012 2z" />
-                    </svg>
-                  }
+                  className="w-full sm:w-auto btn-secondary btn-lg hover-lift"
                 >
-                  Watch Demo
+                  <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.828 14.828a4 4 0 01-5.656 0M9 10h1m4 0h1m-6 4h1m4 0h1m5-9v18a2 2 0 01-2 2H4a2 2 0 01-2-2V5a2 2 0 012-2h16a2 2 0 012 2z" />
+                  </svg>
+                  <span>Watch Demo</span>
                 </Button>
               </div>
 
@@ -105,11 +100,11 @@ const HomePage: React.FC = () => {
               <div className="flex items-center space-x-6 pt-4">
                 <div className="flex -space-x-2">
                   {[1,2,3,4].map((i) => (
-                    <div key={i} className="w-8 h-8 bg-blue-100 rounded-full border-2 border-white dark:border-slate-900"></div>
+                    <div key={i} className="w-10 h-10 bg-gradient-primary rounded-full border-2 border-white dark:border-neutral-900 animate-float" style={{ animationDelay: `${i * 0.2}s` }}></div>
                   ))}
                 </div>
-                <div className="text-sm text-slate-600 dark:text-slate-400">
-                  <span className="font-semibold text-slate-900 dark:text-slate-100">2,500+</span> users already joined
+                <div className="text-sm text-neutral-600 dark:text-neutral-400">
+                  <span className="font-semibold text-neutral-900 dark:text-neutral-100">2,500+</span> users already joined
                 </div>
               </div>
             </div>
@@ -117,47 +112,47 @@ const HomePage: React.FC = () => {
             {/* Hero Visual */}
             <div className="relative animate-fade-in">
               <div className="relative z-10">
-                <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-8 rounded-3xl shadow-xl">
-                  <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm rounded-2xl p-6 space-y-4">
+                <div className="card-glass p-8 rounded-3xl shadow-xl">
+                  <div className="bg-white/90 dark:bg-neutral-800/90 backdrop-blur-sm rounded-2xl p-6 space-y-4">
                     <div className="flex items-center space-x-3">
-                      <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
-                        <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
+                      <div className="w-12 h-12 bg-gradient-to-r from-success-400 to-success-600 rounded-full flex items-center justify-center animate-pulse">
+                        <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                           <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
                         </svg>
                       </div>
                       <div>
-                        <p className="font-medium text-slate-900 dark:text-slate-100">Task Completed</p>
-                        <p className="text-sm text-slate-600 dark:text-slate-400">Email automation set up</p>
+                        <p className="font-medium text-neutral-900 dark:text-neutral-100">Task Completed</p>
+                        <p className="text-sm text-neutral-600 dark:text-neutral-400">Email automation set up</p>
                       </div>
                     </div>
                     
                     <div className="space-y-2">
-                      <div className="h-2 bg-slate-200 dark:bg-slate-700 rounded-full">
-                        <div className="h-2 bg-blue-500 rounded-full w-3/4 animate-pulse"></div>
+                      <div className="h-2 bg-neutral-200 dark:bg-neutral-700 rounded-full overflow-hidden">
+                        <div className="h-2 bg-gradient-primary rounded-full w-3/4 animate-shimmer"></div>
                       </div>
-                      <p className="text-xs text-slate-600 dark:text-slate-400">Processing next task...</p>
+                      <p className="text-xs text-neutral-600 dark:text-neutral-400">Processing next task...</p>
                     </div>
                   </div>
                 </div>
               </div>
               
               {/* Floating Elements */}
-              <div className="absolute -top-4 -right-4 w-20 h-20 bg-yellow-200 rounded-full opacity-60 animate-float"></div>
-              <div className="absolute -bottom-6 -left-6 w-16 h-16 bg-green-200 rounded-full opacity-40 animate-float" style={{ animationDelay: '1s' }}></div>
+              <div className="absolute -top-4 -right-4 w-20 h-20 bg-accent-sunrise/60 rounded-full animate-float"></div>
+              <div className="absolute -bottom-6 -left-6 w-16 h-16 bg-accent-mint/40 rounded-full animate-float" style={{ animationDelay: '1s' }}></div>
             </div>
           </div>
         </Container>
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-16 md:py-20 lg:py-24">
+      <section id="features" className="section-lg bg-white/50 dark:bg-neutral-900/50">
         <Container>
           <div className="text-center space-y-6 mb-16">
             <h2 className="font-display font-bold text-3xl md:text-5xl">
               Powerful Features for{' '}
-              <span className="bg-gradient-to-r from-blue-600 to-blue-800 bg-clip-text text-transparent">Modern Teams</span>
+              <span className="gradient-text">Modern Teams</span>
             </h2>
-            <p className="text-lg text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg text-neutral-600 dark:text-neutral-400 max-w-3xl mx-auto leading-relaxed">
               Discover how our AI-powered platform can transform your workflow with intelligent automation, 
               seamless integrations, and powerful analytics.
             </p>
@@ -168,37 +163,29 @@ const HomePage: React.FC = () => {
             {features.map((feature, index) => (
               <Card 
                 key={index}
-                hover
-                className="group animate-fade-in-up"
+                className="card hover-lift group animate-fade-in-up"
                 style={{ animationDelay: `${index * 100}ms` }}
               >
-                <div className="space-y-4">
-                  <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/20 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
-                    <feature.icon className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                <div className="card-body space-y-4">
+                  <div className="w-12 h-12 bg-primary-100 dark:bg-primary-900/20 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-200">
+                    <feature.icon className="w-6 h-6 text-primary-600 dark:text-primary-400" />
                   </div>
                   
                   <div className="space-y-2">
                     <h3 className="font-display font-semibold text-xl">
                       {feature.title}
                     </h3>
-                    <p className="text-base text-slate-600 dark:text-slate-400 leading-relaxed">
+                    <p className="text-base text-neutral-600 dark:text-neutral-400 leading-relaxed">
                       {feature.description}
                     </p>
                   </div>
                   
-                  <Button 
-                    variant="ghost" 
-                    size="sm"
-                    icon={
-                      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    }
-                    iconPosition="right"
-                    className="p-0 h-auto text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
-                  >
-                    Learn more
-                  </Button>
+                  <button className="text-primary-600 hover:text-primary-700 dark:text-primary-400 dark:hover:text-primary-300 font-medium flex items-center space-x-2 hover-scale">
+                    <span>Learn more</span>
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
                 </div>
               </Card>
             ))}
@@ -207,10 +194,10 @@ const HomePage: React.FC = () => {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-slate-200 bg-slate-50 dark:border-slate-700 dark:bg-slate-800">
+      <footer className="border-t border-neutral-200 bg-neutral-50/50 dark:border-neutral-700 dark:bg-neutral-800/50">
         <Container>
-          <div className="py-12 text-center">
-            <p className="text-sm text-slate-600 dark:text-slate-400">
+          <div className="section-sm text-center">
+            <p className="text-sm text-neutral-600 dark:text-neutral-400">
               © 2024 AI Assistant Platform. All rights reserved.
             </p>
           </div>
@@ -278,4 +265,4 @@ const features = [
   }
 ];
 
-export default HomePage; 
+export default HomePage;

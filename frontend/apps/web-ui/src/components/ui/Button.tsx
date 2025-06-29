@@ -4,21 +4,21 @@ import { cn, createVariants } from '../../utils/cn';
 
 // Button Variants Configuration
 const buttonVariants = createVariants(
-  // Base styles - using standard Tailwind classes
-  'inline-flex items-center justify-center rounded-lg font-medium transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed min-h-[44px]',
+  // Base styles - using design system classes
+  'btn',
   {
     variant: {
-      primary: 'bg-blue-400 hover:bg-blue-500 active:bg-blue-600 text-white shadow-sm hover:shadow-md active:shadow-sm focus:ring-blue-400 dark:bg-blue-500 dark:hover:bg-blue-600 dark:active:bg-blue-700',
-      secondary: 'bg-slate-100 hover:bg-slate-200 active:bg-slate-300 text-slate-700 border border-slate-200 shadow-sm hover:shadow-md dark:bg-slate-700 dark:hover:bg-slate-600 dark:active:bg-slate-500 dark:text-slate-200 dark:border-slate-600',
-      ghost: 'hover:bg-slate-100 active:bg-slate-200 text-slate-700 dark:hover:bg-slate-700 dark:active:bg-slate-600 dark:text-slate-200',
-      destructive: 'bg-red-500 hover:bg-red-600 active:bg-red-700 text-white shadow-sm hover:shadow-md focus:ring-red-500'
+      primary: 'btn-primary',
+      secondary: 'btn-secondary',
+      ghost: 'btn-ghost',
+      destructive: 'bg-error-500 hover:bg-error-600 active:bg-error-700 text-white shadow-md hover:shadow-error focus:ring-error-500'
     },
     size: {
-      xs: 'px-3 py-2 text-xs min-h-[32px]',
-      sm: 'px-3 py-2 text-sm min-h-[36px]',
-      md: 'px-4 py-3 text-base min-h-[44px]',
-      lg: 'px-6 py-4 text-lg min-h-[52px]',
-      xl: 'px-8 py-5 text-xl min-h-[60px]'
+      xs: 'btn-sm text-xs min-h-[32px] px-3 py-2',
+      sm: 'btn-sm',
+      md: 'text-base min-h-[44px] px-4 py-3',
+      lg: 'btn-lg',
+      xl: 'btn-xl'
     }
   }
 );
@@ -47,7 +47,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(
           buttonVariants({ variant, size }),
           fullWidth && 'w-full',
-          loading && 'cursor-wait',
+          loading && 'cursor-wait opacity-75',
           className
         )}
         disabled={isDisabled}
@@ -81,22 +81,24 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         
         {/* Left Icon */}
         {!loading && icon && iconPosition === 'left' && (
-          <span className="flex-shrink-0">
+          <span className="flex-shrink-0 mr-2">
             {icon}
           </span>
         )}
         
         {/* Button Text */}
-        <span className={cn(
-          'flex-1',
-          !fullWidth && 'flex-initial'
-        )}>
-          {children}
-        </span>
+        {!loading && (
+          <span className={cn(
+            'flex items-center',
+            fullWidth && 'justify-center'
+          )}>
+            {children}
+          </span>
+        )}
         
         {/* Right Icon */}
         {!loading && icon && iconPosition === 'right' && (
-          <span className="flex-shrink-0">
+          <span className="flex-shrink-0 ml-2">
             {icon}
           </span>
         )}
@@ -107,4 +109,4 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
 Button.displayName = 'Button';
 
-export default Button; 
+export default Button;
